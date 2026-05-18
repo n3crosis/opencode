@@ -19,7 +19,8 @@ export function terminalWebSocketURL(input: {
     next.searchParams.set("ticket", input.ticket)
     return next
   }
-  if (input.password && (!input.sameOrigin || input.authToken))
+  // Empty passwords are valid Basic auth credentials.
+  if (input.password !== undefined && (!input.sameOrigin || input.authToken))
     next.searchParams.set(
       "auth_token",
       authTokenFromCredentials({ username: input.username, password: input.password }),
